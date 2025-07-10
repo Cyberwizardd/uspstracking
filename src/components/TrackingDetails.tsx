@@ -1,5 +1,6 @@
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import packageImage from "@/assets/package.png";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
@@ -26,12 +27,23 @@ export function TrackingDetails({
       </div>
       
       <div className="space-y-4">
-        <div className="bg-tracking-success text-white p-3 rounded-lg">
-          <div className="flex items-center space-x-2">
-            <Package className="h-5 w-5" />
-            <span className="font-medium">Tracking Number:</span>
+        <div className="flex items-center gap-6 mb-4">
+          <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+            <img 
+              src={packageImage} 
+              alt="Package" 
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div className="mt-1 text-lg font-bold">{trackingNumber}</div>
+          <div className="flex-1">
+            <div className="bg-tracking-success text-white p-3 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <Package className="h-5 w-5" />
+                <span className="font-medium">Tracking Number:</span>
+              </div>
+              <div className="mt-1 text-lg font-bold">{trackingNumber}</div>
+            </div>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

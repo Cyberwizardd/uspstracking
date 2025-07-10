@@ -41,7 +41,7 @@ const Index = () => {
                 placeholder="Enter tracking number"
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
-                className="flex-1"
+                className="flex-1 text-black"
               />
               <Button onClick={handleQuickTrack} className="bg-usps-blue hover:bg-usps-blue/90">
                 Track

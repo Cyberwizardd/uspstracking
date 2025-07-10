@@ -52,6 +52,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				usps: {
+					blue: 'hsl(var(--usps-blue))',
+					dark: 'hsl(var(--usps-dark))'
+				},
+				tracking: {
+					success: 'hsl(var(--tracking-success))',
+					warning: 'hsl(var(--tracking-warning))',
+					progress: 'hsl(var(--tracking-progress))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

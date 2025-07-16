@@ -12,7 +12,7 @@ const trackingData = {
   progress: 100,
   events: [
     {
-      date: "2025-07-04",
+      date: "2025-07-15",
       time: "16:30 PM",
       location: "New Jersey, US",
       description: "Package has been delivered",

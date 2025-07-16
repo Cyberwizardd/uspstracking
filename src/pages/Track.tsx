@@ -5,18 +5,25 @@ import { TrackingTimeline } from "@/components/TrackingTimeline";
 
 const trackingData = {
   trackingNumber: "ES789645123US",
-  status: "In Transit",
-  estimatedDelivery: "Monday, 2025-07-14 16:15 PM",
+  status: "Delivered",
+  estimatedDelivery: "Tuesday, 2025-07-15 16:30 PM",
   fromLocation: "Sorting Facility",
-  toLocation: "701 US highway 46, Kenvil, New Jersey, 07847",
-  progress: 65,
+  toLocation: "707 US highway 46, Kenvil, New Jersey, 07847",
+  progress: 100,
   events: [
+    {
+      date: "2025-07-04",
+      time: "16:30 PM",
+      location: "New Jersey, US",
+      description: "Package has been delivered",
+      status: "current" as const
+    },
     {
       date: "2025-07-04",
       time: "10:30 AM",
       location: "Texas, US",
       description: "Package is on the way to destination",
-      status: "current" as const
+      status: "completed" as const
     },
     {
       date: "2025-06-04",

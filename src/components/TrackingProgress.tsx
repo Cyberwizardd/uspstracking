@@ -32,9 +32,9 @@ export function TrackingProgress({ progress, fromLocation, toLocation }: Trackin
         </div>
       </div>
       
-      <div className="mt-4 flex items-center justify-center space-x-2 text-tracking-progress">
+      <div className="mt-4 flex items-center justify-center space-x-2 text-tracking-success">
         <CheckCircle className="h-4 w-4" />
-        <span className="text-sm font-medium">In Transit</span>
+        <span className="text-sm font-medium">Delivered</span>
       </div>
     </div>
   );

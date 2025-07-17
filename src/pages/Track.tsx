@@ -2,47 +2,59 @@ import { Header } from "@/components/Header";
 import { TrackingDetails } from "@/components/TrackingDetails";
 import { TrackingProgress } from "@/components/TrackingProgress";
 import { TrackingTimeline } from "@/components/TrackingTimeline";
-
-const trackingData = {
-  trackingNumber: "HE7801301585PQ",
-  status: "In Transit",
-  estimatedDelivery: "Saturday, 13:00 PM",
-  fromLocation: "Sorting Facility",
-  toLocation: "4251 Bonner Dr Olive Branch,Ms 38654",
-  progress: 56,
-  events: [
-    {
-      date: "2025-07-18",
-      time: "08:30",
-      location: "Texas, US",
-      description: "Package is on the way to destination",
-      status: "current" as const
-    },
-    {
-      date: "2025-07-18",
-      time: "08:15",
-      location: "Texas, US",
-      description: "Package departed from sorting facility",
-      status: "completed" as const
-    },
-    {
-      date: "2025-07-17",
-      time: "10:20",
-      location: "Texas, US",
-      description: "Package processed at sorting facility",
-      status: "completed" as const
-    },
-    {
-      date: "2025-07-17",
-      time: "09:20",
-      location: "Package picked up from sender (Travis)",
-      description: "Package picked up from sender (Travis)",
-      status: "completed" as const
-    }
-  ]
-};
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
 
 export default function Track() {
+  const [trackingData, setTrackingData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTrackingData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('tracking')
+          .select('*')
+          .eq('tracking_number', 'HE7801301585PQ')
+          .single();
+
+        if (error) {
+          console.error('Error fetching tracking data:', error);
+          return;
+        }
+
+        setTrackingData(data);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrackingData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-6 py-8">
+          <div className="text-center">Loading tracking data...</div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!trackingData) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-6 py-8">
+          <div className="text-center">Tracking data not found</div>
+        </main>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -58,17 +70,17 @@ export default function Track() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
             <TrackingDetails
-              trackingNumber={trackingData.trackingNumber}
+              trackingNumber={trackingData.tracking_number}
               status={trackingData.status}
-              estimatedDelivery={trackingData.estimatedDelivery}
-              fromLocation={trackingData.fromLocation}
-              toLocation={trackingData.toLocation}
+              estimatedDelivery={trackingData.estimated_delivery}
+              fromLocation={trackingData.from_location}
+              toLocation={trackingData.to_location}
             />
             
             <TrackingProgress
               progress={trackingData.progress}
-              fromLocation={trackingData.fromLocation}
-              toLocation={trackingData.toLocation}
+              fromLocation={trackingData.from_location}
+              toLocation={trackingData.to_location}
             />
           </div>
           

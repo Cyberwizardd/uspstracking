@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      tracking: {
+        Row: {
+          created_at: string
+          estimated_delivery: string | null
+          events: Json | null
+          from_location: string
+          id: string
+          progress: number | null
+          status: string
+          to_location: string
+          tracking_number: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          estimated_delivery?: string | null
+          events?: Json | null
+          from_location: string
+          id?: string
+          progress?: number | null
+          status: string
+          to_location: string
+          tracking_number: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          estimated_delivery?: string | null
+          events?: Json | null
+          from_location?: string
+          id?: string
+          progress?: number | null
+          status?: string
+          to_location?: string
+          tracking_number?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

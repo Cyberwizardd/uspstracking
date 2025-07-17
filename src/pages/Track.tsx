@@ -3,7 +3,7 @@ import { TrackingDetails } from "@/components/TrackingDetails";
 import { TrackingProgress } from "@/components/TrackingProgress";
 import { TrackingTimeline } from "@/components/TrackingTimeline";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
@@ -13,6 +13,18 @@ export default function Track() {
   const [loading, setLoading] = useState(false);
   const [trackingNumber, setTrackingNumber] = useState("");
   const [searched, setSearched] = useState(false);
+
+  // Check for quick track data from homepage
+  useEffect(() => {
+    const quickTrackData = sessionStorage.getItem('quickTrackData');
+    if (quickTrackData) {
+      const data = JSON.parse(quickTrackData);
+      setTrackingData(data);
+      setTrackingNumber(data.tracking_number);
+      setSearched(true);
+      sessionStorage.removeItem('quickTrackData');
+    }
+  }, []);
 
   const handleSearch = async () => {
     if (!trackingNumber.trim()) return;

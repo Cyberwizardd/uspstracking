@@ -1,6 +1,6 @@
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import packageImage from "@/assets/package.png";
+const checkImage = "/lovable-uploads/74ba8dfd-866f-46cc-826a-6ca74836410b.png";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
@@ -28,10 +28,10 @@ export function TrackingDetails({
       
       <div className="space-y-4">
         <div className="flex items-center gap-6 mb-4">
-          <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+          <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border">
             <img 
-              src={packageImage} 
-              alt="Package" 
+              src={checkImage} 
+              alt="Package Item - Bank Check" 
               className="w-full h-full object-cover"
             />
           </div>

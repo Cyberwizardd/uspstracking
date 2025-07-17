@@ -1,17 +1,74 @@
-import { Mail, Truck, Clock, MapPin, Users, Shield } from "lucide-react";
+import { Mail, Truck, Clock, MapPin, Users, Shield, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Header } from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const handleQuickTrack = () => {
-    if (trackingNumber === "ES789645123US") {
-      window.location.href = "/track";
+  const handleQuickTrack = async () => {
+    if (!trackingNumber.trim()) {
+      toast({
+        title: "Enter tracking number",
+        description: "Please enter a tracking number to search.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSearching(true);
+
+    try {
+      const { data, error } = await supabase
+        .from('tracking')
+        .select('*')
+        .eq('tracking_number', trackingNumber.trim())
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error fetching tracking data:', error);
+        toast({
+          title: "Search error",
+          description: "There was an error searching for your package.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (data) {
+        // Store the tracking data and navigate to track page
+        sessionStorage.setItem('quickTrackData', JSON.stringify(data));
+        navigate('/track');
+      } else {
+        toast({
+          title: "Package not found",
+          description: "No tracking information found for this tracking number.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Search error",
+        description: "There was an error searching for your package.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleQuickTrack();
     }
   };
 
@@ -41,10 +98,20 @@ const Index = () => {
                 placeholder="Enter tracking number"
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
+                onKeyPress={handleKeyPress}
                 className="flex-1 text-black"
+                disabled={isSearching}
               />
-              <Button onClick={handleQuickTrack} className="bg-usps-blue hover:bg-usps-blue/90">
-                Track
+              <Button 
+                onClick={handleQuickTrack} 
+                disabled={isSearching || !trackingNumber.trim()}
+                className="bg-usps-blue hover:bg-usps-blue/90"
+              >
+                {isSearching ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <Search className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>

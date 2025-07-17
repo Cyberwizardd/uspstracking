@@ -19,10 +19,18 @@ export function TrackingTimeline({ events }: TrackingTimelineProps) {
       
       <div className="space-y-4">
         {events.map((event, index) => (
-          <div key={index} className="flex items-start space-x-4">
+          <div key={index} className="flex items-start space-x-4 relative">
+            {/* Connecting line */}
+            {index < events.length - 1 && (
+              <div className={`
+                absolute left-[5px] top-[20px] w-0.5 h-8 
+                ${event.status === 'current' ? 'bg-tracking-progress' : 'bg-gray-300'}
+              `} />
+            )}
+            
             <div className={`
-              w-3 h-3 rounded-full mt-2 flex-shrink-0
-              ${event.status === 'completed' ? 'bg-tracking-success' : 
+              w-3 h-3 rounded-full mt-2 flex-shrink-0 relative z-10
+              ${event.status === 'completed' ? 'bg-gray-400' : 
                 event.status === 'current' ? 'bg-tracking-progress' : 'bg-gray-300'}
             `} />
             

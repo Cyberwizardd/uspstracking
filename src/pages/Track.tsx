@@ -4,32 +4,39 @@ import { TrackingProgress } from "@/components/TrackingProgress";
 import { TrackingTimeline } from "@/components/TrackingTimeline";
 
 const trackingData = {
-  trackingNumber: "ES789645123US",
-  status: "Delivered",
-  estimatedDelivery: "Tuesday, 2025-07-15 16:30 PM",
+  trackingNumber: "HE7801301585PQ",
+  status: "In Transit",
+  estimatedDelivery: "Saturday, 13:00 PM",
   fromLocation: "Sorting Facility",
-  toLocation: "707 US highway 46, Kenvil, New Jersey, 07847",
-  progress: 100,
+  toLocation: "4251 Bonner Dr Olive Branch,Ms 38654",
+  progress: 56,
   events: [
     {
-      date: "2025-07-15",
-      time: "16:30 PM",
-      location: "New Jersey, US",
-      description: "Package has been delivered",
+      date: "2025-07-18",
+      time: "08:30",
+      location: "Texas, US",
+      description: "Package is on the way to destination",
       status: "current" as const
     },
     {
-      date: "2025-07-04",
-      time: "10:30 AM",
+      date: "2025-07-18",
+      time: "08:15",
       location: "Texas, US",
-      description: "Package is on the way to destination",
+      description: "Package departed from sorting facility",
       status: "completed" as const
     },
     {
-      date: "2025-06-04",
-      time: "10:15 AM", 
+      date: "2025-07-17",
+      time: "10:20",
       location: "Texas, US",
-      description: "Package departed from sorting facility",
+      description: "Package processed at sorting facility",
+      status: "completed" as const
+    },
+    {
+      date: "2025-07-17",
+      time: "09:20",
+      location: "Package picked up from sender (Travis)",
+      description: "Package picked up from sender (Travis)",
       status: "completed" as const
     }
   ]

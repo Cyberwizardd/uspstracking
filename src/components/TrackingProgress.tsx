@@ -14,11 +14,11 @@ export function TrackingProgress({ progress, fromLocation, toLocation }: Trackin
       
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
-          <Building2 className="h-5 w-5 text-usps-blue" />
+          <Building2 className="h-4 w-4 text-usps-blue" />
           <span className="text-sm font-medium">{fromLocation}</span>
         </div>
         <div className="flex items-center space-x-2">
-          <Home className="h-5 w-5 text-primary" />
+          <Home className="h-4 w-4 text-primary" />
           <span className="text-sm font-medium">{toLocation}</span>
         </div>
       </div>
@@ -32,9 +32,8 @@ export function TrackingProgress({ progress, fromLocation, toLocation }: Trackin
         </div>
       </div>
       
-      <div className="mt-4 flex items-center justify-center space-x-2 text-tracking-success">
-        <CheckCircle className="h-4 w-4" />
-        <span className="text-sm font-medium">Delivered</span>
+      <div className="mt-4 flex items-center justify-center space-x-2 text-tracking-progress">
+        <span className="text-sm font-medium">In Transit</span>
       </div>
     </div>
   );

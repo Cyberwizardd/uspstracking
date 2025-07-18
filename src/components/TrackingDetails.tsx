@@ -36,6 +36,11 @@ export function TrackingDetails({
                 src={imageUrl} 
                 alt="" 
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  console.error('Image failed to load:', imageUrl);
+                  e.currentTarget.style.display = 'none';
+                }}
+                onLoad={() => console.log('Image loaded successfully:', imageUrl)}
               />
             ) : (
               <Package className="h-8 w-8 text-muted-foreground" />

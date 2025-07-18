@@ -1,4 +1,4 @@
-import { Building2, Home, CheckCircle } from "lucide-react";
+import { Building2, Home, CheckCircle, Building } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface TrackingProgressProps {
@@ -14,7 +14,11 @@ export function TrackingProgress({ progress, fromLocation, toLocation }: Trackin
       
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
-          <Building2 className="h-4 w-4 text-usps-blue" />
+          {fromLocation === "Sorting Facility" ? (
+            <Building className="h-4 w-4 text-muted-foreground" />
+          ) : (
+            <Building2 className="h-4 w-4 text-usps-blue" />
+          )}
           <span className="text-sm font-medium">{fromLocation}</span>
         </div>
         <div className="flex items-center space-x-2">

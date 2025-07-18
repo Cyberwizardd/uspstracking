@@ -1,6 +1,5 @@
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-const checkImage = "/lovable-uploads/74ba8dfd-866f-46cc-826a-6ca74836410b.png";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
@@ -8,6 +7,7 @@ interface TrackingDetailsProps {
   estimatedDelivery: string;
   fromLocation: string;
   toLocation: string;
+  imageUrl?: string;
 }
 
 export function TrackingDetails({ 
@@ -15,7 +15,8 @@ export function TrackingDetails({
   status, 
   estimatedDelivery, 
   fromLocation, 
-  toLocation 
+  toLocation,
+  imageUrl 
 }: TrackingDetailsProps) {
   return (
     <div className="bg-card rounded-lg p-6 border">
@@ -29,11 +30,15 @@ export function TrackingDetails({
       <div className="space-y-4">
         <div className="flex items-center gap-6 mb-4">
           <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border">
-            <img 
-              src={checkImage} 
-              alt="Package Item - Bank Check" 
-              className="w-full h-full object-cover"
-            />
+            {imageUrl ? (
+              <img 
+                src={imageUrl} 
+                alt="Package Item" 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <Package className="h-8 w-8 text-muted-foreground" />
+            )}
           </div>
           <div className="flex-1">
             <div className="bg-tracking-success text-white p-3 rounded-lg">

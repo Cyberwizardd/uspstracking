@@ -106,9 +106,6 @@ export function TrackingDetails({
                 />
                 <div className="text-center space-y-1">
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Package Item Image</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Uploaded package documentation
-                  </p>
                 </div>
               </div>
             ) : (

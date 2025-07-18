@@ -1,3 +1,4 @@
+
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -19,6 +20,20 @@ export function TrackingDetails({
   imageUrl 
 }: TrackingDetailsProps) {
   console.log('TrackingDetails imageUrl:', imageUrl);
+  
+  // Fix the image URL to use the correct absolute path
+  const getImageUrl = (url: string | null) => {
+    if (!url) return null;
+    if (url.startsWith('http')) return url;
+    if (url.startsWith('/lovable-uploads/')) {
+      return `${window.location.origin}${url}`;
+    }
+    return url;
+  };
+
+  const finalImageUrl = imageUrl ? getImageUrl(imageUrl) : null;
+  console.log('Final image URL:', finalImageUrl);
+
   return (
     <div className="bg-card rounded-lg p-6 border">
       <div className="flex items-center justify-between mb-4">
@@ -31,16 +46,16 @@ export function TrackingDetails({
       <div className="space-y-4">
         <div className="flex items-center gap-6 mb-4">
           <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border">
-            {imageUrl ? (
+            {finalImageUrl ? (
               <img 
-                src={imageUrl} 
-                alt="" 
+                src={finalImageUrl} 
+                alt="Package" 
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  console.error('Image failed to load:', imageUrl);
+                  console.error('Image failed to load:', finalImageUrl);
                   e.currentTarget.style.display = 'none';
                 }}
-                onLoad={() => console.log('Image loaded successfully:', imageUrl)}
+                onLoad={() => console.log('Image loaded successfully:', finalImageUrl)}
               />
             ) : (
               <Package className="h-8 w-8 text-muted-foreground" />

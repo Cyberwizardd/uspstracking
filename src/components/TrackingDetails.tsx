@@ -44,31 +44,13 @@ export function TrackingDetails({
       </div>
       
       <div className="space-y-4">
-        <div className="flex items-center gap-6 mb-4">
-          <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border">
-            {finalImageUrl ? (
-              <img 
-                src={finalImageUrl} 
-                alt="Package" 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  console.error('Image failed to load:', finalImageUrl);
-                  e.currentTarget.style.display = 'none';
-                }}
-                onLoad={() => console.log('Image loaded successfully:', finalImageUrl)}
-              />
-            ) : (
-              <Package className="h-8 w-8 text-muted-foreground" />
-            )}
-          </div>
-          <div className="flex-1">
-            <div className="bg-tracking-success text-white p-3 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <Package className="h-5 w-5" />
-                <span className="font-medium">Tracking Number:</span>
-              </div>
-              <div className="mt-1 text-lg font-bold">{trackingNumber}</div>
+        <div className="flex-1">
+          <div className="bg-tracking-success text-white p-3 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Package className="h-5 w-5" />
+              <span className="font-medium">Tracking Number:</span>
             </div>
+            <div className="mt-1 text-lg font-bold">{trackingNumber}</div>
           </div>
         </div>
         
@@ -96,6 +78,43 @@ export function TrackingDetails({
             <span className="font-medium text-tracking-progress">Estimated Delivery</span>
           </div>
           <p className="text-lg font-semibold">{estimatedDelivery}</p>
+        </div>
+
+        {/* Package Item section - only show title "Package Item" for ES310199481US */}
+        <div className="bg-gray-50 dark:bg-gray-900/20 p-4 rounded-lg">
+          <div className="flex items-center space-x-2 mb-4">
+            <Package className="h-5 w-5 text-primary" />
+            <span className="font-medium text-primary">
+              {trackingNumber === "ES310199481US" ? "Package Item" : "Package Details"}
+            </span>
+          </div>
+          <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg p-4 border-2 border-dashed border-gray-300 dark:border-gray-600">
+            {finalImageUrl ? (
+              <div className="space-y-3">
+                <img 
+                  src={finalImageUrl} 
+                  alt="Package Item" 
+                  className="w-full h-48 object-cover rounded-lg border"
+                  onError={(e) => {
+                    console.error('Image failed to load:', finalImageUrl);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                  onLoad={() => console.log('Image loaded successfully:', finalImageUrl)}
+                />
+                <div className="text-center space-y-1">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Package Item Image</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Uploaded package documentation
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <Package className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-sm text-gray-500 dark:text-gray-400">No package image available</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

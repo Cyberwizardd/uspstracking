@@ -18,6 +18,7 @@ export function TrackingDetails({
   toLocation,
   imageUrl 
 }: TrackingDetailsProps) {
+  console.log('TrackingDetails imageUrl:', imageUrl);
   return (
     <div className="bg-card rounded-lg p-6 border">
       <div className="flex items-center justify-between mb-4">

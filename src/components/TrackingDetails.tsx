@@ -34,7 +34,7 @@ export function TrackingDetails({
             {imageUrl ? (
               <img 
                 src={imageUrl} 
-                alt="Package Item" 
+                alt="" 
                 className="w-full h-full object-cover"
               />
             ) : (

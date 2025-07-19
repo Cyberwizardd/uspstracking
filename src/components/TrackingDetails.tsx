@@ -31,9 +31,11 @@ export function TrackingDetails({
     return url;
   };
 
-  // Use the specific image for ES310199481US
+  // Use the specific image for different tracking numbers
   const finalImageUrl = trackingNumber === "ES310199481US" 
     ? "/lovable-uploads/d93f30ba-d077-4fcf-8c38-4165e08bf22f.png"
+    : trackingNumber === "ES456395197US"
+    ? "/lovable-uploads/3f24deac-9720-47d0-9beb-b2fbe73606a6.png"
     : (imageUrl ? getImageUrl(imageUrl) : null);
   console.log('Final image URL:', finalImageUrl);
 

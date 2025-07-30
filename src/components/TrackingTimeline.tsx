@@ -46,7 +46,7 @@ export function TrackingTimeline({ events }: TrackingTimelineProps) {
               </div>
               
               <div className="flex items-center space-x-2 mb-1">
-                <MapPin className="h-4 w-4 text-primary" />
+                <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
                 <span className="font-medium">{event.location}</span>
               </div>
               

@@ -1,4 +1,4 @@
-import { Building2, Home, CheckCircle, Building } from "lucide-react";
+import { Building2, Home, Building } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface TrackingProgressProps {

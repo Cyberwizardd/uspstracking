@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin, Plane } from "lucide-react";
 
 interface TimelineEvent {
   date: string;
@@ -6,6 +6,7 @@ interface TimelineEvent {
   location: string;
   description: string;
   status: "completed" | "current" | "upcoming";
+  icon?: string;
 }
 
 interface TrackingTimelineProps {
@@ -35,6 +36,9 @@ export function TrackingTimeline({ events }: TrackingTimelineProps) {
             
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-4 mb-1">
+                {event.icon === 'plane' && (
+                  <Plane className="h-5 w-5 text-primary font-bold" strokeWidth={2.5} />
+                )}
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
                   <span>{event.date}</span>

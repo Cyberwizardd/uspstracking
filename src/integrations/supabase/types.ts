@@ -20,7 +20,6 @@ export type Database = {
           estimated_delivery: string | null
           events: Json | null
           from_location: string
-          id: string
           image_url: string | null
           progress: number | null
           status: string
@@ -33,7 +32,6 @@ export type Database = {
           estimated_delivery?: string | null
           events?: Json | null
           from_location: string
-          id?: string
           image_url?: string | null
           progress?: number | null
           status: string
@@ -46,7 +44,6 @@ export type Database = {
           estimated_delivery?: string | null
           events?: Json | null
           from_location?: string
-          id?: string
           image_url?: string | null
           progress?: number | null
           status?: string

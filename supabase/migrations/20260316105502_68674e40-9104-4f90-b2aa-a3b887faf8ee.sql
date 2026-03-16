@@ -1,0 +1,4 @@
+INSERT INTO tracking (tracking_number, status, estimated_delivery, from_location, to_location, progress, image_url, events) VALUES ('ES4277791169US', 'In Transit', 'Thursday, 19-03-2026 03:30 PM', 'Sorting Facility', '2300 E Tahquitz Canyon Way #1 Palm Springs, CA 92262', 50, '/lovable-uploads/money-es4277791169us.jpeg', '[
+  {"date": "2026-03-16", "time": "07:50 AM", "location": "", "description": "Package will be on the way to destination", "status": "current"},
+  {"date": "2026-03-16", "time": "05:55 AM", "location": "Texas, US", "description": "Package departed from sorting facility", "status": "completed", "icon": "plane"}
+]'::jsonb);

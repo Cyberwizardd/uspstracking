@@ -241,6 +241,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-muted py-6 text-center text-sm text-muted-foreground">
+        © 2026 USPS All rights reserved
+      </footer>
     </div>
   );
 };

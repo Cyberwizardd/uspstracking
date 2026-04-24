@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           created_at: string
           estimated_delivery: string | null
+          estimated_delivery_at: string | null
           events: Json | null
           from_location: string
           image_url: string | null
@@ -30,6 +31,7 @@ export type Database = {
         Insert: {
           created_at?: string
           estimated_delivery?: string | null
+          estimated_delivery_at?: string | null
           events?: Json | null
           from_location: string
           image_url?: string | null
@@ -42,6 +44,7 @@ export type Database = {
         Update: {
           created_at?: string
           estimated_delivery?: string | null
+          estimated_delivery_at?: string | null
           events?: Json | null
           from_location?: string
           image_url?: string | null
@@ -58,7 +61,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      auto_mark_delivered: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

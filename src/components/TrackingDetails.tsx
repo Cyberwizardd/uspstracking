@@ -38,6 +38,8 @@ export function TrackingDetails({
     ? "/lovable-uploads/3f24deac-9720-47d0-9beb-b2fbe73606a6.png"
     : trackingNumber === "ES6694768927US"
     ? new URL("@/assets/package-es6694768927us.jpg", import.meta.url).href
+    : trackingNumber === "ES6875768547US"
+    ? new URL("@/assets/package-es6875768547us.jpeg", import.meta.url).href
     : (imageUrl ? getImageUrl(imageUrl) : null);
   console.log('Final image URL:', finalImageUrl);
 

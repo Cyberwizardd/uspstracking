@@ -1,6 +1,7 @@
 
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { formatDeliveryDateTime } from "@/lib/formatDelivery";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
@@ -86,7 +87,7 @@ export function TrackingDetails({
             <Clock className="h-5 w-5 text-tracking-progress" />
             <span className="font-medium text-tracking-progress">Estimated Delivery</span>
           </div>
-          <p className="text-lg font-semibold">{estimatedDelivery}</p>
+          <p className="text-lg font-semibold">{formatDeliveryDateTime(estimatedDelivery) || estimatedDelivery}</p>
         </div>
 
         {/* Package Item section - only show title "Package Item" for ES310199481US */}

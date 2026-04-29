@@ -136,9 +136,15 @@ export function TrackingTimeline({
                 <div className="flex items-center space-x-2 mb-1">
                   <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
                   {isStreetAddress(event.location) ? (
-                    <Home className="h-4 w-4 text-primary" />
+                    <>
+                      <Home className="h-4 w-4 text-primary" />
+                      <span className="text-xs uppercase tracking-wide text-muted-foreground">Street address</span>
+                    </>
                   ) : (
-                    <Building2 className="h-4 w-4 text-usps-blue" />
+                    <>
+                      <Building2 className="h-4 w-4 text-usps-blue" />
+                      <span className="text-xs uppercase tracking-wide text-muted-foreground">Facility</span>
+                    </>
                   )}
                   <span className="font-medium">{event.location}</span>
                 </div>

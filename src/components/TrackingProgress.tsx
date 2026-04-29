@@ -5,9 +5,11 @@ interface TrackingProgressProps {
   progress: number;
   fromLocation: string;
   toLocation: string;
+  status?: string;
 }
 
-export function TrackingProgress({ progress, fromLocation, toLocation }: TrackingProgressProps) {
+export function TrackingProgress({ progress, fromLocation, toLocation, status }: TrackingProgressProps) {
+  const isDelivered = status === "Delivered" || progress >= 100;
   return (
     <div className="bg-card rounded-lg p-6 border">
       <h3 className="text-lg font-semibold mb-4">Package Journey</h3>

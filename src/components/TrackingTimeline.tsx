@@ -11,9 +11,10 @@ interface TimelineEvent {
 
 interface TrackingTimelineProps {
   events: TimelineEvent[];
+  allDelivered?: boolean;
 }
 
-export function TrackingTimeline({ events }: TrackingTimelineProps) {
+export function TrackingTimeline({ events, allDelivered }: TrackingTimelineProps) {
   return (
     <div className="bg-card rounded-lg p-6 border">
       <h3 className="text-lg font-semibold mb-4">Tracking History</h3>

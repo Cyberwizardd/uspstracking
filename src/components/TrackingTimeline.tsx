@@ -172,7 +172,7 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
             {isStreet ? (
               <>
                 <Home className="h-4 w-4 text-primary" />
-                <span className="text-xs uppercase tracking-wide text-muted-foreground">Street address</span>
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">Home</span>
               </>
             ) : (
               <>
@@ -196,7 +196,7 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
               <span className="font-medium">{formattedTime}</span>
 
               <span className="text-muted-foreground">Location type</span>
-              <span className="font-medium">{isStreet ? 'Street address' : 'Facility'}</span>
+              <span className="font-medium">{isStreet ? 'Home' : 'Facility'}</span>
 
               <span className="text-muted-foreground">Location</span>
               <span className="font-medium">{event.location}</span>

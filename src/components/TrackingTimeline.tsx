@@ -1,4 +1,6 @@
-import { Calendar, Clock, MapPin, Plane, Building2, Home } from "lucide-react";
+import { useState } from "react";
+import { Calendar, Clock, MapPin, Plane, Building2, Home, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 function isStreetAddress(location: string): boolean {
   if (!location) return false;
@@ -101,60 +103,111 @@ export function TrackingTimeline({
       <h3 className="text-lg font-semibold mb-4">Tracking History</h3>
       
       <div className="space-y-4">
-        {allEvents.map((event, index) => {
-          const isCompleted = allDelivered || event.status === 'completed' || event.status === 'current';
-          return (
-            <div key={index} className="flex items-start space-x-4 relative">
-              {/* Connecting line */}
-              {index < allEvents.length - 1 && (
-                <div className={`
-                  absolute left-[5px] top-[20px] w-0.5 h-8 
-                  ${isCompleted ? 'bg-green-500' : 'bg-gray-400'}
-                `} />
+        {allEvents.map((event, index) => (
+          <TimelineRow
+            key={index}
+            event={event}
+            isLast={index === allEvents.length - 1}
+            allDelivered={!!allDelivered}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface TimelineRowProps {
+  event: TimelineEvent;
+  isLast: boolean;
+  allDelivered: boolean;
+}
+
+function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
+  const [open, setOpen] = useState(false);
+  const isCompleted = allDelivered || event.status === 'completed' || event.status === 'current';
+  const isStreet = isStreetAddress(event.location);
+  const formattedDate = formatEventDate(event.date);
+  const formattedTime = formatEventTime(event.time);
+
+  return (
+    <div className="flex items-start space-x-4 relative">
+      {/* Connecting line */}
+      {!isLast && (
+        <div className={`
+          absolute left-[5px] top-[20px] w-0.5 h-full
+          ${isCompleted ? 'bg-green-500' : 'bg-gray-400'}
+        `} />
+      )}
+
+      <div className={`
+        w-3 h-3 rounded-full mt-2 flex-shrink-0 relative z-10
+        ${isCompleted ? 'bg-green-500' : 'bg-gray-400'}
+      `} />
+
+      <Collapsible open={open} onOpenChange={setOpen} className="flex-1 min-w-0">
+        <CollapsibleTrigger className="w-full text-left rounded-md px-2 py-2 -mx-2 hover:bg-muted/50 transition-colors">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center space-x-4 min-w-0">
+              {event.icon === 'plane' && (
+                <Plane className="h-5 w-5 text-primary font-bold flex-shrink-0" strokeWidth={2.5} />
               )}
-              
-              <div className={`
-                w-3 h-3 rounded-full mt-2 flex-shrink-0 relative z-10
-                ${isCompleted ? 'bg-green-500' : 'bg-gray-400'}
-              `} />
-              
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-4 mb-1">
-                  {event.icon === 'plane' && (
-                    <Plane className="h-5 w-5 text-primary font-bold" strokeWidth={2.5} />
-                  )}
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4" />
-                    <span>{formatEventDate(event.date)}</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span>{formatEventTime(event.time)}</span>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-2 mb-1">
-                  <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
-                  {isStreetAddress(event.location) ? (
-                    <>
-                      <Home className="h-4 w-4 text-primary" />
-                      <span className="text-xs uppercase tracking-wide text-muted-foreground">Street address</span>
-                    </>
-                  ) : (
-                    <>
-                      <Building2 className="h-4 w-4 text-usps-blue" />
-                      <span className="text-xs uppercase tracking-wide text-muted-foreground">Facility</span>
-                    </>
-                  )}
-                  <span className="font-medium">{event.location}</span>
-                </div>
-                
-                <p className="text-sm text-muted-foreground">{event.description}</p>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Calendar className="h-4 w-4" />
+                <span>{formattedDate}</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4" />
+                <span>{formattedTime}</span>
               </div>
             </div>
-          );
-        })}
-      </div>
+            <ChevronDown
+              className={`h-4 w-4 text-muted-foreground transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`}
+            />
+          </div>
+
+          <div className="flex items-center space-x-2 mt-1">
+            <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
+            {isStreet ? (
+              <>
+                <Home className="h-4 w-4 text-primary" />
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">Street address</span>
+              </>
+            ) : (
+              <>
+                <Building2 className="h-4 w-4 text-usps-blue" />
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">Facility</span>
+              </>
+            )}
+            <span className="font-medium truncate">{event.location}</span>
+          </div>
+
+          <p className="text-sm text-muted-foreground mt-1">{event.description}</p>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent>
+          <div className="mt-2 ml-2 rounded-md border bg-muted/30 p-3 text-sm space-y-2">
+            <div className="grid grid-cols-[110px_1fr] gap-y-1">
+              <span className="text-muted-foreground">Date</span>
+              <span className="font-medium">{formattedDate}</span>
+
+              <span className="text-muted-foreground">Time</span>
+              <span className="font-medium">{formattedTime}</span>
+
+              <span className="text-muted-foreground">Location type</span>
+              <span className="font-medium">{isStreet ? 'Street address' : 'Facility'}</span>
+
+              <span className="text-muted-foreground">Location</span>
+              <span className="font-medium">{event.location}</span>
+
+              <span className="text-muted-foreground">Status</span>
+              <span className="font-medium capitalize">{event.status}</span>
+
+              <span className="text-muted-foreground">Details</span>
+              <span className="font-medium">{event.description}</span>
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Timer, CheckCircle2 } from "lucide-react";
+import { formatDeliveryDateTime } from "@/lib/formatDelivery";
 
 interface DeliveryCountdownProps {
   estimatedDeliveryAt: string | null;
@@ -48,9 +49,12 @@ export function DeliveryCountdown({ estimatedDeliveryAt, isDelivered }: Delivery
 
   return (
     <div className="mb-4 rounded-lg border bg-gradient-to-br from-usps-blue/5 to-tracking-progress/5 p-4">
-      <div className="mb-3 flex items-center justify-center gap-2 text-tracking-progress">
-        <Timer className="h-4 w-4" />
-        <span className="text-sm font-medium">Arriving in</span>
+      <div className="mb-3 flex flex-col items-center gap-1 text-tracking-progress">
+        <div className="flex items-center gap-2">
+          <Timer className="h-4 w-4" />
+          <span className="text-sm font-medium">Arriving in</span>
+        </div>
+        <span className="text-xs text-muted-foreground">{formatDeliveryDateTime(estimatedDeliveryAt)}</span>
       </div>
       <div className="grid grid-cols-4 gap-2">
         {units.map((u) => (

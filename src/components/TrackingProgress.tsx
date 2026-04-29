@@ -1,19 +1,23 @@
 import { Building2, Home, Building } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { DeliveryCountdown } from "./DeliveryCountdown";
 
 interface TrackingProgressProps {
   progress: number;
   fromLocation: string;
   toLocation: string;
   status?: string;
+  estimatedDeliveryAt?: string | null;
 }
 
-export function TrackingProgress({ progress, fromLocation, toLocation, status }: TrackingProgressProps) {
+export function TrackingProgress({ progress, fromLocation, toLocation, status, estimatedDeliveryAt }: TrackingProgressProps) {
   const isDelivered = status === "Delivered" || progress >= 100;
   return (
     <div className="bg-card rounded-lg p-6 border">
       <h3 className="text-lg font-semibold mb-4">Package Journey</h3>
-      
+
+      <DeliveryCountdown estimatedDeliveryAt={estimatedDeliveryAt ?? null} isDelivered={isDelivered} />
+
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
           {fromLocation === "Sorting Facility" ? (

@@ -159,6 +159,7 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
   const [open, setOpen] = useState(false);
   const isCompleted = allDelivered || event.status === 'completed' || event.status === 'current';
   const isStreet = isStreetAddress(event.location);
+  const badge = getStatusBadge(event);
   const formattedDate = formatEventDate(event.date);
   const formattedTime = formatEventTime(event.time);
 

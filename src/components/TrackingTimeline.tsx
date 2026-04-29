@@ -26,13 +26,13 @@ export function TrackingTimeline({ events, allDelivered }: TrackingTimelineProps
             {index < events.length - 1 && (
               <div className={`
                 absolute left-[5px] top-[20px] w-0.5 h-8 
-                ${event.status === 'current' ? 'bg-green-500' : 'bg-gray-400'}
+                ${allDelivered || event.status === 'current' ? 'bg-green-500' : 'bg-gray-400'}
               `} />
             )}
             
             <div className={`
               w-3 h-3 rounded-full mt-2 flex-shrink-0 relative z-10
-              ${event.status === 'current' ? 'bg-green-500' : 'bg-gray-400'}
+              ${allDelivered || event.status === 'current' ? 'bg-green-500' : 'bg-gray-400'}
             `} />
             
             <div className="flex-1 min-w-0">

@@ -38,53 +38,102 @@ interface TimelineEvent {
 interface TrackingTimelineProps {
   events: TimelineEvent[];
   allDelivered?: boolean;
+  deliveryAddress?: string;
+  estimatedDeliveryAt?: string | null;
 }
 
-export function TrackingTimeline({ events, allDelivered }: TrackingTimelineProps) {
+function buildDeliveryEntry(
+  address: string,
+  estimatedAt: string,
+  isDelivered: boolean
+): TimelineEvent {
+  const d = new Date(estimatedAt);
+  const date = d.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    timeZone: "America/New_York",
+  });
+  const time = d.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "America/New_York",
+  });
+  return {
+    date,
+    time: `${time} ET`,
+    location: address,
+    description: isDelivered
+      ? `Package delivered to ${address}`
+      : `Scheduled delivery to ${address}`,
+    status: isDelivered ? "completed" : "upcoming",
+  };
+}
+
+export function TrackingTimeline({
+  events,
+  allDelivered,
+  deliveryAddress,
+  estimatedDeliveryAt,
+}: TrackingTimelineProps) {
+  const baseEvents = Array.isArray(events) ? events : [];
+  const hasDeliveryEntry = baseEvents.some(
+    (e) => e.description?.toLowerCase().includes("delivered to") ||
+           e.description?.toLowerCase().includes("scheduled delivery")
+  );
+  const allEvents =
+    deliveryAddress && estimatedDeliveryAt && !hasDeliveryEntry
+      ? [...baseEvents, buildDeliveryEntry(deliveryAddress, estimatedDeliveryAt, !!allDelivered)]
+      : baseEvents;
+
   return (
     <div className="bg-card rounded-lg p-6 border">
       <h3 className="text-lg font-semibold mb-4">Tracking History</h3>
       
       <div className="space-y-4">
-        {events.map((event, index) => (
-          <div key={index} className="flex items-start space-x-4 relative">
-            {/* Connecting line */}
-            {index < events.length - 1 && (
+        {allEvents.map((event, index) => {
+          const isCompleted = allDelivered || event.status === 'completed' || event.status === 'current';
+          return (
+            <div key={index} className="flex items-start space-x-4 relative">
+              {/* Connecting line */}
+              {index < allEvents.length - 1 && (
+                <div className={`
+                  absolute left-[5px] top-[20px] w-0.5 h-8 
+                  ${isCompleted ? 'bg-green-500' : 'bg-gray-400'}
+                `} />
+              )}
+              
               <div className={`
-                absolute left-[5px] top-[20px] w-0.5 h-8 
-                ${allDelivered || event.status === 'current' ? 'bg-green-500' : 'bg-gray-400'}
+                w-3 h-3 rounded-full mt-2 flex-shrink-0 relative z-10
+                ${isCompleted ? 'bg-green-500' : 'bg-gray-400'}
               `} />
-            )}
-            
-            <div className={`
-              w-3 h-3 rounded-full mt-2 flex-shrink-0 relative z-10
-              ${allDelivered || event.status === 'current' ? 'bg-green-500' : 'bg-gray-400'}
-            `} />
-            
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center space-x-4 mb-1">
-                {event.icon === 'plane' && (
-                  <Plane className="h-5 w-5 text-primary font-bold" strokeWidth={2.5} />
-                )}
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  <span>{formatEventDate(event.date)}</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  <span>{formatEventTime(event.time)}</span>
-                </div>
-              </div>
               
-              <div className="flex items-center space-x-2 mb-1">
-                <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
-                <span className="font-medium">{event.location}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center space-x-4 mb-1">
+                  {event.icon === 'plane' && (
+                    <Plane className="h-5 w-5 text-primary font-bold" strokeWidth={2.5} />
+                  )}
+                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>{formatEventDate(event.date)}</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    <span>{formatEventTime(event.time)}</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2 mb-1">
+                  <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
+                  <span className="font-medium">{event.location}</span>
+                </div>
+                
+                <p className="text-sm text-muted-foreground">{event.description}</p>
               </div>
-              
-              <p className="text-sm text-muted-foreground">{event.description}</p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

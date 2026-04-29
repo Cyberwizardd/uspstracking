@@ -184,7 +184,7 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
           <p className="text-sm text-muted-foreground mt-1">{event.description}</p>
         </CollapsibleTrigger>
 
-        <CollapsibleContent>
+        <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
           <div className="mt-2 ml-2 rounded-md border bg-muted/30 p-3 text-sm space-y-2">
             <div className="grid grid-cols-[110px_1fr] gap-y-1">
               <span className="text-muted-foreground">Date</span>

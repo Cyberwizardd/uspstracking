@@ -48,6 +48,37 @@ interface TimelineEvent {
   icon?: string;
 }
 
+function getStatusBadge(event: TimelineEvent): { label: string; className: string } {
+  const desc = (event.description || "").toLowerCase();
+  const loc = (event.location || "").toLowerCase();
+
+  if (desc.includes("delivered")) {
+    return { label: "Delivered", className: "bg-green-500/15 text-green-700 dark:text-green-400 border-green-500/30" };
+  }
+  if (desc.includes("scheduled") || event.status === "upcoming") {
+    return { label: "Scheduled", className: "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30" };
+  }
+  if (desc.includes("out for delivery")) {
+    return { label: "Out for Delivery", className: "bg-orange-500/15 text-orange-700 dark:text-orange-400 border-orange-500/30" };
+  }
+  if (desc.includes("departed") || event.icon === "plane") {
+    return { label: "Departed", className: "bg-indigo-500/15 text-indigo-700 dark:text-indigo-400 border-indigo-500/30" };
+  }
+  if (desc.includes("on the way") || desc.includes("in transit") || loc === "in transit") {
+    return { label: "In Transit", className: "bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/30" };
+  }
+  if (desc.includes("processed") || desc.includes("sorting")) {
+    return { label: "Processed", className: "bg-purple-500/15 text-purple-700 dark:text-purple-400 border-purple-500/30" };
+  }
+  if (desc.includes("picked up") || desc.includes("pickup")) {
+    return { label: "Picked Up", className: "bg-teal-500/15 text-teal-700 dark:text-teal-400 border-teal-500/30" };
+  }
+  if (event.status === "current") {
+    return { label: "Current", className: "bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/30" };
+  }
+  return { label: "Update", className: "bg-muted text-muted-foreground border-border" };
+}
+
 interface TrackingTimelineProps {
   events: TimelineEvent[];
   allDelivered?: boolean;

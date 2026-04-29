@@ -129,6 +129,7 @@ export default function Track() {
                 fromLocation={trackingData.from_location}
                 toLocation={trackingData.to_location}
                 status={trackingData.status}
+                estimatedDeliveryAt={trackingData.estimated_delivery_at}
               />
             </div>
             

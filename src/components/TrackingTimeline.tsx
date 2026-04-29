@@ -193,9 +193,14 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
                 <span>{formattedTime}</span>
               </div>
             </div>
-            <ChevronDown
-              className={`h-4 w-4 text-muted-foreground transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`}
-            />
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border ${badge.className}`}>
+                {badge.label}
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 text-muted-foreground transition-transform ${open ? 'rotate-180' : ''}`}
+              />
+            </div>
           </div>
 
           <div className="flex items-center space-x-2 mt-1">

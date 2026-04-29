@@ -128,11 +128,12 @@ export default function Track() {
                 progress={trackingData.progress}
                 fromLocation={trackingData.from_location}
                 toLocation={trackingData.to_location}
+                status={trackingData.status}
               />
             </div>
             
             <div>
-              <TrackingTimeline events={trackingData.events} />
+              <TrackingTimeline events={trackingData.events} allDelivered={trackingData.status === 'Delivered' || trackingData.progress >= 100} />
             </div>
           </div>
         )}

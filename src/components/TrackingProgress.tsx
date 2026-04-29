@@ -5,9 +5,11 @@ interface TrackingProgressProps {
   progress: number;
   fromLocation: string;
   toLocation: string;
+  status?: string;
 }
 
-export function TrackingProgress({ progress, fromLocation, toLocation }: TrackingProgressProps) {
+export function TrackingProgress({ progress, fromLocation, toLocation, status }: TrackingProgressProps) {
+  const isDelivered = status === "Delivered" || progress >= 100;
   return (
     <div className="bg-card rounded-lg p-6 border">
       <h3 className="text-lg font-semibold mb-4">Package Journey</h3>
@@ -36,8 +38,8 @@ export function TrackingProgress({ progress, fromLocation, toLocation }: Trackin
         </div>
       </div>
       
-      <div className="mt-4 flex items-center justify-center space-x-2 text-tracking-progress">
-        <span className="text-sm font-medium">In Transit</span>
+      <div className={`mt-4 flex items-center justify-center space-x-2 ${isDelivered ? 'text-tracking-success' : 'text-tracking-progress'}`}>
+        <span className="text-sm font-medium">{isDelivered ? 'Delivered' : 'In Transit'}</span>
       </div>
     </div>
   );

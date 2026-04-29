@@ -1,4 +1,13 @@
-import { Calendar, Clock, MapPin, Plane } from "lucide-react";
+import { Calendar, Clock, MapPin, Plane, Building2, Home } from "lucide-react";
+
+function isStreetAddress(location: string): boolean {
+  if (!location) return false;
+  // A street address typically starts with a number (e.g., "701 US highway 46 ...")
+  // or contains a comma with a state/zip pattern.
+  if (/^\s*\d+\s+\S+/.test(location)) return true;
+  if (/,\s*[A-Z]{2}\s*\d{5}/.test(location)) return true;
+  return false;
+}
 
 function formatEventDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -126,6 +135,11 @@ export function TrackingTimeline({
                 
                 <div className="flex items-center space-x-2 mb-1">
                   <MapPin className={`h-4 w-4 ${event.location === 'Local Facility' ? 'text-red-500' : 'text-primary'}`} />
+                  {isStreetAddress(event.location) ? (
+                    <Home className="h-4 w-4 text-primary" />
+                  ) : (
+                    <Building2 className="h-4 w-4 text-usps-blue" />
+                  )}
                   <span className="font-medium">{event.location}</span>
                 </div>
                 

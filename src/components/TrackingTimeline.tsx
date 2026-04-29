@@ -4,10 +4,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 
 function isStreetAddress(location: string): boolean {
   if (!location) return false;
-  // A street address typically starts with a number (e.g., "701 US highway 46 ...")
-  // or contains a comma with a state/zip pattern.
+  // Starts with a number (e.g., "701 US highway 46 ...")
   if (/^\s*\d+\s+\S+/.test(location)) return true;
-  if (/,\s*[A-Z]{2}\s*\d{5}/.test(location)) return true;
+  // Contains a street number anywhere (e.g., "David Dempsey, 701 US Highway 46, ...")
+  if (/(?:^|[\s,])\d{1,6}\s+[A-Za-z]/.test(location)) return true;
+  // US state + ZIP pattern
+  if (/,\s*[A-Za-z ]+\s+\d{5}(?:-\d{4})?/.test(location)) return true;
   return false;
 }
 
@@ -170,7 +172,7 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
             {isStreet ? (
               <>
                 <Home className="h-4 w-4 text-primary" />
-                <span className="text-xs uppercase tracking-wide text-muted-foreground">Street address</span>
+                <span className="text-xs uppercase tracking-wide text-muted-foreground">Home</span>
               </>
             ) : (
               <>
@@ -194,7 +196,7 @@ function TimelineRow({ event, isLast, allDelivered }: TimelineRowProps) {
               <span className="font-medium">{formattedTime}</span>
 
               <span className="text-muted-foreground">Location type</span>
-              <span className="font-medium">{isStreet ? 'Street address' : 'Facility'}</span>
+              <span className="font-medium">{isStreet ? 'Home' : 'Facility'}</span>
 
               <span className="text-muted-foreground">Location</span>
               <span className="font-medium">{event.location}</span>

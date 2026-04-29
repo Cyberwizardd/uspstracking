@@ -1,5 +1,31 @@
 import { Calendar, Clock, MapPin, Plane } from "lucide-react";
 
+function formatEventDate(dateStr: string): string {
+  if (!dateStr) return "";
+  const iso = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (iso) {
+    const d = new Date(Date.UTC(+iso[1], +iso[2] - 1, +iso[3], 12, 0, 0));
+    return d.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      timeZone: "America/New_York",
+    });
+  }
+  return dateStr;
+}
+
+function formatEventTime(timeStr: string): string {
+  if (!timeStr) return "";
+  const m = timeStr.match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return timeStr;
+  let h = parseInt(m[1], 10);
+  const min = m[2];
+  const period = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return `${h}:${min} ${period} ET`;
+}
+
 interface TimelineEvent {
   date: string;
   time: string;
@@ -42,11 +68,11 @@ export function TrackingTimeline({ events, allDelivered }: TrackingTimelineProps
                 )}
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>{event.date}</span>
+                  <span>{formatEventDate(event.date)}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4" />
-                  <span>{event.time}</span>
+                  <span>{formatEventTime(event.time)}</span>
                 </div>
               </div>
               

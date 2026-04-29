@@ -134,7 +134,12 @@ export default function Track() {
             </div>
             
             <div>
-              <TrackingTimeline events={trackingData.events} allDelivered={trackingData.status === 'Delivered' || trackingData.progress >= 100} />
+              <TrackingTimeline
+                events={trackingData.events}
+                allDelivered={trackingData.status === 'Delivered' || trackingData.progress >= 100}
+                deliveryAddress={trackingData.to_location}
+                estimatedDeliveryAt={trackingData.estimated_delivery_at}
+              />
             </div>
           </div>
         )}

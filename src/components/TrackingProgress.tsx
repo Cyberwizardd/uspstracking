@@ -86,7 +86,7 @@ export function TrackingProgress({ progress, fromLocation, toLocation, status, e
       </div>
       
       <div className={`mt-4 flex items-center justify-center space-x-2 ${isDelivered ? 'text-tracking-success' : 'text-tracking-progress'}`}>
-        <span className="text-sm font-medium">{isDelivered ? 'Delivered' : 'In Transit'}</span>
+        <span className="text-sm font-medium">{isDelivered ? 'Delivered' : (status || 'In Transit')}</span>
       </div>
     </div>
   );

@@ -1,0 +1,1 @@
+UPDATE public.tracking SET image_url = '/__l5e/assets-v1/b51fe286-1bab-4c32-abc5-beab11916afc/package-es4265800825us.jpeg' WHERE tracking_number = 'ES4265800825US';

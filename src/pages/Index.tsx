@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import phoneAsset from "@/assets/usps-app-phone.jpg.asset.json";
+import shipAsset from "@/assets/usps-ship-from-home.jpg.asset.json";
 
 const Index = () => {
   const [trackingNumber, setTrackingNumber] = useState("");

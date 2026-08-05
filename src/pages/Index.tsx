@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import phoneAsset from "@/assets/usps-app-phone.jpg.asset.json";
+import shipAsset from "@/assets/usps-ship-from-home.jpg.asset.json";
 
 const Index = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
@@ -201,28 +203,65 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
-            
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-6">
-                <div className="text-4xl font-bold text-usps-blue mb-2">50</div>
-                <div className="text-sm text-muted-foreground">States</div>
-              </div>
-              <div className="text-center p-6">
-                <div className="text-4xl font-bold text-usps-blue mb-2">100M+</div>
-                <div className="text-sm text-muted-foreground">Packages</div>
-              </div>
-              <div className="text-center p-6">
-                <div className="text-4xl font-bold text-usps-blue mb-2">24/7</div>
-                <div className="text-sm text-muted-foreground">Support</div>
-              </div>
-              <div className="text-center p-6">
-                <div className="text-4xl font-bold text-usps-blue mb-2">99.9%</div>
-                <div className="text-sm text-muted-foreground">Delivery Rate</div>
-              </div>
+
+            <div className="relative">
+              <div className="absolute -inset-4 bg-usps-blue/10 rounded-3xl -rotate-2" aria-hidden="true" />
+              <img
+                src={phoneAsset.url}
+                alt="Person tracking USPS packages on the mobile app"
+                loading="lazy"
+                className="relative rounded-2xl shadow-2xl w-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+            <div className="text-center p-6">
+              <div className="text-4xl font-bold text-usps-blue mb-2">50</div>
+              <div className="text-sm text-muted-foreground">States</div>
+            </div>
+            <div className="text-center p-6">
+              <div className="text-4xl font-bold text-usps-blue mb-2">100M+</div>
+              <div className="text-sm text-muted-foreground">Packages</div>
+            </div>
+            <div className="text-center p-6">
+              <div className="text-4xl font-bold text-usps-blue mb-2">24/7</div>
+              <div className="text-sm text-muted-foreground">Support</div>
+            </div>
+            <div className="text-center p-6">
+              <div className="text-4xl font-bold text-usps-blue mb-2">99.9%</div>
+              <div className="text-sm text-muted-foreground">Delivery Rate</div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Ship From Home Banner */}
+      <section className="relative overflow-hidden">
+        <img
+          src={shipAsset.url}
+          alt="Printing a USPS Priority Mail shipping label at home"
+          loading="lazy"
+          className="w-full h-56 md:h-72 object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-usps-dark/85 via-usps-dark/50 to-transparent" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="container mx-auto px-6">
+            <div className="max-w-md text-white">
+              <h2 className="text-2xl md:text-4xl font-bold mb-3">Ship From Home</h2>
+              <p className="text-sm md:text-base text-gray-200 mb-5">
+                Print labels, schedule pickups and follow every package from your desk.
+              </p>
+              <Link to="/track">
+                <Button className="bg-usps-blue hover:bg-usps-blue/90">
+                  Track a Shipment
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* CTA Section */}
       <section className="bg-usps-blue text-white py-16">

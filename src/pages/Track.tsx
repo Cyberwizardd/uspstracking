@@ -77,30 +77,9 @@ export default function Track() {
 
   const handleSearch = async () => {
     if (!trackingNumber.trim()) return;
-    
-    setLoading(true);
-    setSearched(true);
-    setTrackingData(null);
-
-    try {
-      const { data, error } = await supabase
-        .from('tracking')
-        .select('*')
-        .eq('tracking_number', trackingNumber.trim())
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error fetching tracking data:', error);
-        return;
-      }
-
-      setTrackingData(data);
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-    }
+    await lookup(trackingNumber);
   };
+
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

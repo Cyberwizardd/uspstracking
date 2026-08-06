@@ -2,15 +2,18 @@
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatDeliveryDateTime } from "@/lib/formatDelivery";
+import { EtaCountdown } from "./EtaCountdown";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
   status: string;
   estimatedDelivery: string;
+  estimatedDeliveryAt?: string | null;
   fromLocation: string;
   toLocation: string;
   imageUrl?: string;
 }
+
 
 export function TrackingDetails({ 
   trackingNumber, 

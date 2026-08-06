@@ -6,13 +6,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Link2, Check } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export default function Track() {
   const [trackingData, setTrackingData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [trackingNumber, setTrackingNumber] = useState("");
   const [searched, setSearched] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Check for quick track data from homepage
   useEffect(() => {
@@ -23,8 +25,55 @@ export default function Track() {
       setTrackingNumber(data.tracking_number);
       setSearched(true);
       sessionStorage.removeItem('quickTrackData');
+      return;
+    }
+    const param = new URLSearchParams(window.location.search).get('number');
+    if (param) {
+      setTrackingNumber(param);
+      void lookup(param);
     }
   }, []);
+
+  const lookup = async (value: string) => {
+    setLoading(true);
+    setSearched(true);
+    setTrackingData(null);
+    try {
+      const { data, error } = await supabase
+        .from('tracking')
+        .select('*')
+        .eq('tracking_number', value.trim())
+        .maybeSingle();
+      if (error) {
+        console.error('Error fetching tracking data:', error);
+        return;
+      }
+      setTrackingData(data);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    const number = trackingData?.tracking_number || trackingNumber.trim();
+    const url = `${window.location.origin}/track?number=${encodeURIComponent(number)}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const el = document.createElement('textarea');
+      el.value = url;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+    setCopied(true);
+    toast({ title: "Link copied", description: "Tracking link copied to clipboard." });
+    setTimeout(() => setCopied(false), 2000);
+  };
+
 
   const handleSearch = async () => {
     if (!trackingNumber.trim()) return;

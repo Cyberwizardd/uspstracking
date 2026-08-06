@@ -19,6 +19,8 @@ export function TrackingDetails({
   trackingNumber, 
   status, 
   estimatedDelivery, 
+  estimatedDeliveryAt,
+
   fromLocation, 
   toLocation,
   imageUrl 

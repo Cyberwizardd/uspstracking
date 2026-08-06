@@ -121,7 +121,19 @@ export default function Track() {
               )}
             </Button>
           </div>
+          {trackingData && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCopyLink}
+              className="mt-3 w-full"
+            >
+              {copied ? <Check className="h-4 w-4 mr-2" /> : <Link2 className="h-4 w-4 mr-2" />}
+              {copied ? "Link copied" : "Copy tracking link"}
+            </Button>
+          )}
         </div>
+
 
         {/* Loading State */}
         {loading && (

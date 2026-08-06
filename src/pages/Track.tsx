@@ -159,6 +159,8 @@ export default function Track() {
                 trackingNumber={trackingData.tracking_number}
                 status={trackingData.status}
                 estimatedDelivery={trackingData.estimated_delivery}
+                estimatedDeliveryAt={trackingData.estimated_delivery_at}
+
                 fromLocation={trackingData.from_location}
                 toLocation={trackingData.to_location}
                 imageUrl={trackingData.image_url}

@@ -176,8 +176,11 @@ const Index = () => {
                 src={phoneAsset}
                 alt="Person tracking USPS packages on the mobile app"
                 loading="lazy"
-                className="relative rounded-2xl shadow-2xl w-full object-cover"
+                decoding="async"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="relative rounded-2xl shadow-2xl w-full h-auto max-h-[520px] object-contain mx-auto"
               />
+
             </div>
           </div>
 

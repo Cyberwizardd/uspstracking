@@ -78,14 +78,16 @@ const Index = () => {
       <Header />
 
       {/* Ship From Home Banner */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-usps-dark">
         <img
           src={shipAsset}
           alt="Printing a USPS Priority Mail shipping label at home"
           loading="eager"
-          className="w-full h-64 md:h-80 object-cover"
+          decoding="async"
+          sizes="100vw"
+          className="w-full max-h-[420px] object-contain object-center mx-auto aspect-[16/9] sm:aspect-[21/9]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-usps-dark/85 via-usps-dark/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-usps-dark/90 via-usps-dark/60 to-usps-dark/20" />
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-6">
             <div className="max-w-md text-white">
@@ -174,8 +176,11 @@ const Index = () => {
                 src={phoneAsset}
                 alt="Person tracking USPS packages on the mobile app"
                 loading="lazy"
-                className="relative rounded-2xl shadow-2xl w-full object-cover"
+                decoding="async"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="relative rounded-2xl shadow-2xl w-full h-auto max-h-[520px] object-contain mx-auto"
               />
+
             </div>
           </div>
 

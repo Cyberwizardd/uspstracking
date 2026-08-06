@@ -2,20 +2,25 @@
 import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatDeliveryDateTime } from "@/lib/formatDelivery";
+import { EtaCountdown } from "./EtaCountdown";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
   status: string;
   estimatedDelivery: string;
+  estimatedDeliveryAt?: string | null;
   fromLocation: string;
   toLocation: string;
   imageUrl?: string;
 }
 
+
 export function TrackingDetails({ 
   trackingNumber, 
   status, 
   estimatedDelivery, 
+  estimatedDeliveryAt,
+
   fromLocation, 
   toLocation,
   imageUrl 
@@ -88,7 +93,12 @@ export function TrackingDetails({
             <span className="font-medium text-tracking-progress">Estimated Delivery</span>
           </div>
           <p className="text-lg font-semibold">{formatDeliveryDateTime(estimatedDelivery) || estimatedDelivery}</p>
+          <EtaCountdown
+            estimatedDeliveryAt={estimatedDeliveryAt ?? estimatedDelivery}
+            isDelivered={status === "Delivered"}
+          />
         </div>
+
 
         {/* Package Item section - only show title "Package Item" for ES310199481US */}
         <div className="bg-gray-50 dark:bg-gray-900/20 p-4 rounded-lg">

@@ -22,6 +22,7 @@ export type Database = {
           events: Json | null
           from_location: string
           image_url: string | null
+          owner_name: string | null
           progress: number | null
           status: string
           to_location: string
@@ -35,6 +36,7 @@ export type Database = {
           events?: Json | null
           from_location: string
           image_url?: string | null
+          owner_name?: string | null
           progress?: number | null
           status: string
           to_location: string
@@ -48,6 +50,7 @@ export type Database = {
           events?: Json | null
           from_location?: string
           image_url?: string | null
+          owner_name?: string | null
           progress?: number | null
           status?: string
           to_location?: string

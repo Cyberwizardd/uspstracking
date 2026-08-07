@@ -1,5 +1,5 @@
 
-import { Package, Clock, MapPin, Building2, Home } from "lucide-react";
+import { Package, Clock, MapPin, Building2, Home, UserRound } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatDeliveryDateTime } from "@/lib/formatDelivery";
 import { EtaCountdown } from "./EtaCountdown";

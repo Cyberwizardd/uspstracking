@@ -70,6 +70,16 @@ export function TrackingDetails({
             <div className="mt-1 text-lg font-bold">{trackingNumber}</div>
           </div>
         </div>
+
+        {ownerName && (
+          <div className="flex items-center gap-3 rounded-lg border bg-muted/30 p-3">
+            <UserRound className="h-5 w-5 text-muted-foreground" />
+            <div>
+              <p className="text-sm text-muted-foreground">Package Owner</p>
+              <p className="font-semibold">{ownerName}</p>
+            </div>
+          </div>
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">

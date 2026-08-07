@@ -157,6 +157,7 @@ export default function Track() {
             <div className="space-y-6">
               <TrackingDetails
                 trackingNumber={trackingData.tracking_number}
+                ownerName={trackingData.owner_name}
                 status={trackingData.status}
                 estimatedDelivery={trackingData.estimated_delivery}
                 estimatedDeliveryAt={trackingData.estimated_delivery_at}

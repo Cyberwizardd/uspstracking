@@ -6,6 +6,7 @@ import { EtaCountdown } from "./EtaCountdown";
 
 interface TrackingDetailsProps {
   trackingNumber: string;
+  ownerName?: string | null;
   status: string;
   estimatedDelivery: string;
   estimatedDeliveryAt?: string | null;
@@ -16,7 +17,8 @@ interface TrackingDetailsProps {
 
 
 export function TrackingDetails({ 
-  trackingNumber, 
+  trackingNumber,
+  ownerName,
   status, 
   estimatedDelivery, 
   estimatedDeliveryAt,

@@ -1,12 +1,13 @@
-import { Mail, Truck, Clock, MapPin, Users, Shield, Search } from "lucide-react";
+import { Mail, Truck, Clock, MapPin, Users, Shield, Search, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Header } from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { DeliveryCountdown } from "@/components/DeliveryCountdown";
 import phoneAsset from "@/assets/usps-app-phone.jpg";
 import shipAsset from "@/assets/usps-ship-from-home.jpg";
 

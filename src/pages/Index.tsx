@@ -167,6 +167,42 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Featured Delivery Countdown */}
+      <section className="py-12 bg-background border-b">
+        <div className="container mx-auto px-6">
+          {!loadingFeatured && featuredTracking && (
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-6">
+                <p className="text-sm font-semibold uppercase tracking-widest text-usps-blue mb-2">Featured Shipment</p>
+                <h2 className="text-2xl md:text-3xl font-bold">Delivery Countdown</h2>
+                <p className="text-muted-foreground mt-2">
+                  Package <span className="font-mono font-medium">{featuredTracking.tracking_number}</span> heading to {featuredTracking.to_location}
+                </p>
+              </div>
+              <Card className="border-usps-blue/20 shadow-lg">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <Package className="h-5 w-5 text-usps-blue" />
+                    <span className="font-semibold">Estimated Delivery: Friday, Aug 28, 2026</span>
+                  </div>
+                  <DeliveryCountdown
+                    estimatedDeliveryAt={featuredTracking.estimated_delivery_at}
+                    isDelivered={featuredTracking.status === 'Delivered' || featuredTracking.progress >= 100}
+                  />
+                  <div className="flex justify-center">
+                    <Link to={`/track?number=${encodeURIComponent(featuredTracking.tracking_number)}`}>
+                      <Button className="bg-usps-blue hover:bg-usps-blue/90">
+                        Track This Package
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* About Section */}
       <section className="py-16">
         <div className="container mx-auto px-6">

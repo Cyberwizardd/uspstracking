@@ -1,20 +1,39 @@
-import { Mail, Truck, Clock, MapPin, Users, Shield, Search } from "lucide-react";
+import { Mail, Truck, Clock, MapPin, Users, Shield, Search, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Header } from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { DeliveryCountdown } from "@/components/DeliveryCountdown";
 import phoneAsset from "@/assets/usps-app-phone.jpg";
 import shipAsset from "@/assets/usps-ship-from-home.jpg";
 
 const Index = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [featuredTracking, setFeaturedTracking] = useState<any>(null);
+  const [loadingFeatured, setLoadingFeatured] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      setLoadingFeatured(true);
+      const { data, error } = await supabase
+        .from('tracking')
+        .select('*')
+        .eq('tracking_number', 'ES2608250724US')
+        .maybeSingle();
+      if (!error) {
+        setFeaturedTracking(data);
+      }
+      setLoadingFeatured(false);
+    };
+    fetchFeatured();
+  }, []);
 
   const handleQuickTrack = async () => {
     if (!trackingNumber.trim()) {
@@ -145,6 +164,42 @@ const Index = () => {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Featured Delivery Countdown */}
+      <section className="py-12 bg-background border-b">
+        <div className="container mx-auto px-6">
+          {!loadingFeatured && featuredTracking && (
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-6">
+                <p className="text-sm font-semibold uppercase tracking-widest text-usps-blue mb-2">Featured Shipment</p>
+                <h2 className="text-2xl md:text-3xl font-bold">Delivery Countdown</h2>
+                <p className="text-muted-foreground mt-2">
+                  Package <span className="font-mono font-medium">{featuredTracking.tracking_number}</span> heading to {featuredTracking.to_location}
+                </p>
+              </div>
+              <Card className="border-usps-blue/20 shadow-lg">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <Package className="h-5 w-5 text-usps-blue" />
+                    <span className="font-semibold">Estimated Delivery: Friday, Aug 28, 2026</span>
+                  </div>
+                  <DeliveryCountdown
+                    estimatedDeliveryAt={featuredTracking.estimated_delivery_at}
+                    isDelivered={featuredTracking.status === 'Delivered' || featuredTracking.progress >= 100}
+                  />
+                  <div className="flex justify-center">
+                    <Link to={`/track?number=${encodeURIComponent(featuredTracking.tracking_number)}`}>
+                      <Button className="bg-usps-blue hover:bg-usps-blue/90">
+                        Track This Package
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </section>
 

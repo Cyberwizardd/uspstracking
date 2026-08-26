@@ -14,8 +14,26 @@ import shipAsset from "@/assets/usps-ship-from-home.jpg";
 const Index = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [featuredTracking, setFeaturedTracking] = useState<any>(null);
+  const [loadingFeatured, setLoadingFeatured] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      setLoadingFeatured(true);
+      const { data, error } = await supabase
+        .from('tracking')
+        .select('*')
+        .eq('tracking_number', 'ES2608250724US')
+        .maybeSingle();
+      if (!error) {
+        setFeaturedTracking(data);
+      }
+      setLoadingFeatured(false);
+    };
+    fetchFeatured();
+  }, []);
 
   const handleQuickTrack = async () => {
     if (!trackingNumber.trim()) {

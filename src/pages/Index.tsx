@@ -183,7 +183,7 @@ const Index = () => {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-center gap-2 mb-4">
                     <Package className="h-5 w-5 text-usps-blue" />
-                    <span className="font-semibold">Estimated Delivery: Friday, Aug 28, 2026</span>
+                    <span className="font-semibold">Estimated Delivery: Monday, Aug 31, 2026 • 4:00 PM ET</span>
                   </div>
                   <DeliveryCountdown
                     estimatedDeliveryAt={featuredTracking.estimated_delivery_at}
